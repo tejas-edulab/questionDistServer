@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import RoleRepositories from '../role/role.util';
 import ApiError from '../../../utils/api-error';
 import UserRepository from '../user/user.util';
-import { keycloakRegisterSchema, keycloakAssignClientRollToUserSchema, keycloakCreateRoleSchema,  } from './keycloak.validator'
+import { keycloakRegisterSchema, keycloakAssignClientRollToUserSchema, keycloakCreateRoleSchema, } from './keycloak.validator'
 import { IRoles, IKeycloakRole } from '../user/user.types';
 import logger from '../../../utils/winston';
 import { IApiErrors } from '../../../types/error';
@@ -246,6 +246,7 @@ export default class KeycloakController {
             /*
              Validate request body
             */
+
             const {
                 firstName, lastName, email, password, roleInfo, username
             } = await keycloakRegisterSchema.validateAsync(req.body);

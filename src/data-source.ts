@@ -1,7 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { User } from "./features/v1/user/user.model"
-import Roles from "./features/v1/role/role.model";
 import path from 'path';
 import * as dotenv from 'dotenv';
 import { Exam } from "./features/v1/exam/exam.model"
@@ -14,6 +13,9 @@ import { ExamSubject } from "./features/v1/exam/exam-subject.model"
 import { Uploads } from "./features/v1/upload/uploads.model"
 import { ActivityTracker } from "./features/v1/actvity_tracker/activity_tracker.model"
 import { UserRole } from "./features/v1/userRole/userRole.model";
+import Roles from "./features/v1/role/role.model";
+import { AssignSME } from "./features/v1/assignSME/assignSME.model";
+import { AssignPaperSetter } from "./features/v1/assignPaperSetter/assignPaperSetter.model";
 
 // Load the .env file
 dotenv.config();
@@ -32,11 +34,11 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || 'osm',
     synchronize: false,
     logging: false,
-    entities: [User,Roles,Exam,
-        Course,Subject,Semester,College,CollegeCourseOffered,
-        ExamSubject,Uploads,
+    entities: [User, Roles, Exam,
+        Course, Subject, Semester, College, CollegeCourseOffered,
+        ExamSubject, Uploads,
         ActivityTracker,
-        UserRole
+        UserRole, AssignSME, AssignPaperSetter
     ],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],

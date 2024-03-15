@@ -8,7 +8,9 @@ import script from './script/script.route'
 import exam from './exam/exam.route'
 import upload from './upload/upload.route'
 import role from './role/role.route'
-
+import assignSME from './assignSME/assignSME.route';
+import assignPaperSetter from './assignPaperSetter/assignPaperSetter.route';
+import assignModerator from './assignModerator/assignModerator.route';
 
 const router = Router();
 dotenv.config();
@@ -34,16 +36,28 @@ const productionRoutes: IRoutes[] = [
         route: script
     },
     {
-        path:'/exam',
-        route:exam
+        path: '/exam',
+        route: exam
     },
     {
-        path:'/upload',
-        route:upload
-    }, 
+        path: '/upload',
+        route: upload
+    },
     {
         path: '/role',
         route: role
+    },
+    {
+        path: '/assignSME',
+        route: assignSME
+    },
+    {
+        path: '/assignPaperSetter',
+        route: assignPaperSetter
+    },
+    {
+        path: '/assignModerator',
+        route: assignModerator
     }
 ];
 

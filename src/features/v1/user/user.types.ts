@@ -1,5 +1,5 @@
 export enum IRoles {
-    SUPER_ADMIN= 'SUPER_ADMIN',
+    SUPER_ADMIN = 'SUPER_ADMIN',
     COE_HEAD = 'COE_HEAD',
     COE_STAFF = 'COE_STAFF',
     PAPER_SETTER = 'PAPER_SETTER',
