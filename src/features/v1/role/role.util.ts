@@ -4,6 +4,7 @@ import { AppDataSource } from "../../../data-source";
 
 import { IRoles } from '../user/user.types';
 import Roles from './role.model';
+import { Not } from 'typeorm';
 
 const roleRepository = AppDataSource.getRepository(Roles);
 
@@ -39,4 +40,8 @@ export default class RoleRepositories {
         const deleted = await roleRepository.remove(role);
         return deleted;
     };
+
+    static fetchRoles = async()=>{
+        return await roleRepository.find({ where:{ roleName: Not(IRoles.SUPER_ADMIN) }})
+    }
 }

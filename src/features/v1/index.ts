@@ -7,6 +7,8 @@ import keycloak from './keycloak/keycloak.route'
 import script from './script/script.route'
 import exam from './exam/exam.route'
 import upload from './upload/upload.route'
+import role from './role/role.route'
+
 
 const router = Router();
 dotenv.config();
@@ -39,6 +41,10 @@ const productionRoutes: IRoutes[] = [
         path:'/upload',
         route:upload
     }, 
+    {
+        path: '/role',
+        route: role
+    }
 ];
 
 // Setting the production route
