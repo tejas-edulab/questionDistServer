@@ -22,14 +22,14 @@ export default class UserRepository {
         const user = await userRepostory.findOne({ where: { email } });
         return user;
     };
-    static addUser = async (firstname: string, lastname: string, email: string, username: string, role: IRoles) => {
+    static addUser = async (firstname: string, lastname: string, email: string, username: string) => {
 
         const user = new User();
         user.firstName = firstname;
         user.lastName = lastname;
         user.email = email;
         // user.isDelete = isDelete;
-        user.role = role;
+        // user.role = role;
         user.username = username;
 
         const createdUser = await userRepostory.save(user);

@@ -42,7 +42,6 @@ const Rbac = (roles: IRoles[]) => async (req: Request, res: Response, next: Next
         });
 
         
-
         // Extract the bearer token from the request headers
         const token = req.headers.authorization?.substring(7);
         if (!token) return next(ApiError.forbidden());

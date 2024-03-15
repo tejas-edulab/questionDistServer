@@ -13,6 +13,7 @@ import CollegeCourseOffered from "./features/v1/college/college-course-offered.m
 import { ExamSubject } from "./features/v1/exam/exam-subject.model"
 import { Uploads } from "./features/v1/upload/uploads.model"
 import { ActivityTracker } from "./features/v1/actvity_tracker/activity_tracker.model"
+import { UserRole } from "./features/v1/userRole/userRole.model";
 
 // Load the .env file
 dotenv.config();
@@ -34,7 +35,8 @@ export const AppDataSource = new DataSource({
     entities: [User,Roles,Exam,
         Course,Subject,Semester,College,CollegeCourseOffered,
         ExamSubject,Uploads,
-        ActivityTracker
+        ActivityTracker,
+        UserRole
     ],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],
