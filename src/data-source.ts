@@ -12,10 +12,11 @@ import CollegeCourseOffered from "./features/v1/college/college-course-offered.m
 import { ExamSubject } from "./features/v1/exam/exam-subject.model"
 import { Uploads } from "./features/v1/upload/uploads.model"
 import { ActivityTracker } from "./features/v1/actvity_tracker/activity_tracker.model"
-import { UserRole } from "./features/v1/userRole/userRole.model";
 import Roles from "./features/v1/role/role.model";
 import { AssignSME } from "./features/v1/assignSME/assignSME.model";
 import { AssignPaperSetter } from "./features/v1/assignPaperSetter/assignPaperSetter.model";
+import { QuestionBank } from "./features/v1/questionBank/questionBank.model";
+import { UserRole } from "./features/v1/userRole/userRole.model";
 
 // Load the .env file
 dotenv.config();
@@ -38,7 +39,7 @@ export const AppDataSource = new DataSource({
         Course, Subject, Semester, College, CollegeCourseOffered,
         ExamSubject, Uploads,
         ActivityTracker,
-        UserRole, AssignSME, AssignPaperSetter
+        UserRole, AssignSME, AssignPaperSetter,QuestionBank
     ],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],
