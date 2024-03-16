@@ -1,4 +1,5 @@
 import { AppDataSource } from '../../../data-source';
+import { jsonParser } from '../../../helpers/common.helpers';
 import { User } from './user.model';
 import { IRoles } from './user.types'
 
@@ -77,6 +78,38 @@ export default class UserRepository {
 
     static fetchEvaluatorByRole = async (role) =>{
         return userRepostory.find({where:{role}})
+    }
+
+    static fetchMultiUser = async()=>{
+        const data = await userRepostory.query(`
+    SELECT 
+            u.id,
+		    u.firstName,
+		    u.lastName,
+		    u.email,
+		    u.username, 
+            JSON_ARRAYAGG(
+            JSON_OBJECT('roleId', ur.roleId, 'roleName', ur.role)
+            ) AS rolesInfo
+    FROM 
+        user u 
+    LEFT JOIN 
+        user_role ur ON ur.userid = u.id 
+    WHERE 
+        ur.role IS NOT NULL AND ur.role <> "SUPER_ADMIN"
+    GROUP BY 
+    u.id;
+        `)
+        if(data.length > 0){
+            const resData = data.map(item=>{
+                item.rolesInfo = JSON.parse(item.rolesInfo)
+                return item
+            })
+
+            return resData
+        }
+       
+        return data
     }
 
 

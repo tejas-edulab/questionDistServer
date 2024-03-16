@@ -10,21 +10,17 @@ const router = Router();
  * @route /api/users
  * @description Get all users
  */
-router.get('/', UserController.getUsers);
 
-/**
- * @GET 
- * @route /api/users/my-info
- * @description Get users info
- */
-router.get('/my-info', Rbac([IRoles.SUPER_ADMIN, IRoles.ADMIN, IRoles.ADMIN, IRoles.EVALUATOR]), UserController.getMyInfo);
+// router.get('/my-info', Rbac([IRoles.SUPER_ADMIN, IRoles.ADMIN, IRoles.ADMIN, IRoles.EVALUATOR]), UserController.getMyInfo);
 
 /**
  * @GET 
  * @route /v1/users/evaluator
  * @description Get evaluator 
  */
-router.get('/evaluator', Rbac([IRoles.SUPER_ADMIN, IRoles.ADMIN]),  UserController.getEvaluator);
+// router.get('/evaluator', Rbac([IRoles.SUPER_ADMIN, IRoles.ADMIN]),  UserController.getEvaluator);
 
+
+router.get('/',UserController.getMultiUsers)
 
 export default router;

@@ -8,11 +8,12 @@ import { IRoles } from './user.types';
 
 export default class UserController {
 
-    public static async getUsers(req: Request, res: Response, next: NextFunction) {
-        try {
-            res.send('Hello World');
-        } catch (error) {
-            next(error);
+    public static async getMultiUsers(req: Request, res: Response, next: NextFunction) {
+        try{
+            const result = await UserRepository.fetchMultiUser()
+            sendSuccessResponse(req,res,{result})
+        }catch(err){
+            next(err)
         }
     }
 
@@ -25,13 +26,14 @@ export default class UserController {
         }
     }
 
-    public static async getEvaluator(req:Request,res:Response,next:NextFunction){
-        try{
-            const result = await UserRepository.fetchEvaluatorByRole(IRoles.EVALUATOR)
-            sendSuccessResponse(req,res,{result})
-        }catch(error){
-            next(error)
-        }
-    }
+    // public static async getEvaluator(req:Request,res:Response,next:NextFunction){
+    //     try{
+    //         const result = await UserRepository.fetchEvaluatorByRole(IRoles.EVALUATOR)
+    //         sendSuccessResponse(req,res,{result})
+    //     }catch(error){
+    //         next(error)
+    //     }
+    // }
 
+  
 }
