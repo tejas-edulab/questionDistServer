@@ -12,10 +12,10 @@ export default class ExamRepository {
         return exam;
     }
 
-    static fetchExamByExamCode = async(examCode:string)=>{
+    static fetchExamByExamCode = async (examCode: string) => {
         const exam = await examRepository.findOne({
-            where:{
-                examCode:examCode
+            where: {
+                examCode: examCode
             }
         })
         return exam;
@@ -31,7 +31,7 @@ export default class ExamRepository {
             ' ',
             e.YEAR,
             ' ',
-            c.courseName,
+            c.name,
             ' ',
             s.semName 
         ) AS examName 

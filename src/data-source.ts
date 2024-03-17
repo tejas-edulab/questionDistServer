@@ -17,6 +17,7 @@ import { AssignSME } from "./features/v1/assignSME/assignSME.model";
 import { AssignPaperSetter } from "./features/v1/assignPaperSetter/assignPaperSetter.model";
 import { QuestionBank } from "./features/v1/questionBank/questionBank.model";
 import { UserRole } from "./features/v1/userRole/userRole.model";
+import { AssignModerator } from "./features/v1/assignModerator/assignModerator.model";
 
 // Load the .env file
 dotenv.config();
@@ -35,11 +36,11 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || 'osm',
     synchronize: false,
     logging: false,
-    entities: [User, Roles, Exam,
+    entities: [User, Roles,
         Course, Subject, Semester, College, CollegeCourseOffered,
         ExamSubject, Uploads,
         ActivityTracker,
-        UserRole, AssignSME, AssignPaperSetter,QuestionBank
+        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator
     ],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],

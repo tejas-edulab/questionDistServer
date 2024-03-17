@@ -8,4 +8,6 @@ router.post('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), 
 
 router.get('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignSMEController.getAssignSME);
 
+router.get('/:userId', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignSMEController.getAssignSMEByUserId);
+
 export default router;

@@ -11,6 +11,9 @@ export class AssignModerator {
     @Column({ nullable: true })
     userId: number
 
+    @Column({ nullable: true })
+    examId: number
+
     @CreateDateColumn()
     createdAt: Date;
 
