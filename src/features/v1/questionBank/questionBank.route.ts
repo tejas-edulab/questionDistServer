@@ -8,5 +8,6 @@ router.post('/', Rbac([IRoles.SUPER_ADMIN]), QuestionBankController.createQuesti
 
 router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.COE_STAFF]), QuestionBankController.getQuestionBank);
 
+router.get('/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.COE_STAFF]), QuestionBankController.getQuestionBankById);
 
 export default router;

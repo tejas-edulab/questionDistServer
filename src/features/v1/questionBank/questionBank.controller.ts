@@ -26,9 +26,9 @@ export default class QuestionBankController {
             const id = req.user.id
             const roles = req.user.role
             console.log(roles)
-            if (Array.isArray(roles) ) {
+            if (Array.isArray(roles)) {
                 const isSME = roles.filter((obj: any) => obj.roleName === IRoles.SME);
-                if ( isSME && roles.length === 1) {
+                if (isSME && roles.length === 1) {
                     const data = await QuestionBankUtils.getQuestionBank(id);
                     sendSuccessResponse(req, res, { data });
                 } else {
@@ -37,7 +37,17 @@ export default class QuestionBankController {
             } else {
                 sendSuccessResponse(req, res, { message: "Roles not found or invalid" });
             }
-           
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async getQuestionBankById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id
+            const data = await QuestionBankUtils.getQuestionBankBySubject(Number(id));
+            sendSuccessResponse(req, res, { data });
         } catch (error) {
             next(error)
         }

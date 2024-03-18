@@ -90,8 +90,35 @@ export default class QuestionBankUtils {
 
     }
 
-    static async fetchQuestionBankBySubjectAndUser(subject:number,userId:number){
-        return await questionBankRepository.findOne({where:{subject,userId}})
+    static async getQuestionBankBySubject(subject: number) {
+        const query = `SELECT
+        question_bank.id,
+        question_bank.label,
+        question_bank.marks,
+        question_bank.questionContent,
+        question_bank.questionIndex,
+        question_bank.subject,
+        question_bank.topic,
+        question_bank.type,
+        question_bank.userId,
+        subject.name AS subjectName
+    FROM
+        question_bank
+    LEFT JOIN
+        subject ON question_bank.subject = subject.id
+    WHERE
+        question_bank.subject = ${subject}
+    `;
+        const data = await questionBankRepository.query(query);
+        if (data && data.length > 0) {
+            return jsonParser(data);
+        }
+        return [];
+
+    }
+
+    static async fetchQuestionBankBySubjectAndUser(subject: number, userId: number) {
+        return await questionBankRepository.findOne({ where: { subject, userId } })
     }
 
 }
