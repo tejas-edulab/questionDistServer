@@ -8,4 +8,8 @@ router.post('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), 
 
 router.get('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignModeratorController.getAssignModerator);
 
+router.get('/:userId/:examId', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignModeratorController.getAssignModeratorByUserIdAndExamId);
+
+router.put('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignModeratorController.updateAssignModerator);
+
 export default router;

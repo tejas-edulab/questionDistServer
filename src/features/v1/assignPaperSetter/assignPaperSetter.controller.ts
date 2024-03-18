@@ -57,7 +57,7 @@ export default class AssignPaperSetterController {
             const data = await AssignPaperSetterUtils.getAssignPaperSetterByUserIdAndExamId(Number(userId),Number(examId));
             res.status(200).json({
                 message: 'Paper Setter assigned get successfully',
-                data: data,
+                data: data[0],
                 error: null
             });
     

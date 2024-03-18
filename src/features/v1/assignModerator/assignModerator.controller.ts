@@ -56,30 +56,46 @@ export default class AssignModeratorController {
         try {
             const body = req.body;
             const backup = []
-           try{
-            if (body.subjectIds.length > 0) {
-                const promises = body.subjectIds.map(async (subject: any) => {
-                    const userId = body.userId;
-                    const subjectId = subject.id;
-                    const examId = body.examId
-                    const newData = { userId, subjectId, examId };
-                    await AssignModeratorUtils.deleteAssignModerator(userId,examId);
-                    return await AssignModeratorUtils.saveAssignModerator(newData);
+            try {
+                if (body.subjectIds.length > 0) {
+                    const promises = body.subjectIds.map(async (subject: any) => {
+                        const userId = body.userId;
+                        const subjectId = subject.id;
+                        const examId = body.examId
+                        const newData = { userId, subjectId, examId };
+                        await AssignModeratorUtils.deleteAssignModerator(userId, examId);
+                        return await AssignModeratorUtils.saveAssignModerator(newData);
 
-                });
+                    });
 
-                await Promise.all(promises);
+                    await Promise.all(promises);
 
-                // If all saves are successful, send a success response
-                res.status(200).json({ message: "Assign Moderator operation completed successfully" });
+                    // If all saves are successful, send a success response
+                    res.status(200).json({ message: "Assign Moderator operation completed successfully" });
+                }
+            } catch (err) {
+                backup.push(backup)
             }
-           }catch(err){
-            backup.push(backup)
-           }
         } catch (error) {
             next(error);
         }
 
-} 
+    }
+
+    static async getAssignModeratorByUserIdAndExamId(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId = req.params.userId;
+            const examId = req.params.examId;
+            const data = await AssignModeratorUtils.getAssignModeratorByUserIdAndExamId(Number(userId), Number(examId));
+            res.status(200).json({
+                message: 'Paper Setter assigned get successfully',
+                data: data[0],
+                error: null
+            });
+
+        } catch (err) {
+            next(err)
+        }
+    }
 
 } 

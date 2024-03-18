@@ -76,7 +76,7 @@ export default class AssignPaperSetterUtils {
         user.id and assign_paper_setter.examId;
         `;
         const data = await assignPaperSetter.query(query);
-        return jsonParser(data[0]);
+        return jsonParser(data);
     }
 
 
