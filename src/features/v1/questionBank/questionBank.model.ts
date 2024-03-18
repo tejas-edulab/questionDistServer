@@ -12,22 +12,28 @@ export class QuestionBank {
     marks: number
 
     @Column()
-    questionContent:string
+    questionContent: string
 
     @Column()
-    questionIndex:string
+    questionLevel: string
 
     @Column()
-    subject:number
+    questionIndex: string
 
     @Column()
-    topic:string
+    subject: number
 
     @Column()
-    type:string
+    topic: string
 
     @Column()
-    userId:number
+    type: string
+
+    @Column()
+    userId: number
+
+    @Column()
+    modifiedBy: number
 
     @CreateDateColumn()
     createdAt: Date;

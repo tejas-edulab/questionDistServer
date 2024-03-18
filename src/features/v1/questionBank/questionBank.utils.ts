@@ -101,7 +101,8 @@ export default class QuestionBankUtils {
         question_bank.topic,
         question_bank.type,
         question_bank.userId,
-        subject.name AS subjectName
+        subject.name AS subjectName,
+        question_bank.questionLevel
     FROM
         question_bank
     LEFT JOIN
