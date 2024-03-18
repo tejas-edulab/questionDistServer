@@ -113,8 +113,8 @@ export default class AssignPaperSetterUtils {
         return jsonParser(data);
     }
 
-    static async updateAssignPaperSetter(userId: number, subjectId: number) {
-        const query = `UPDATE assign_paper_setter SET subjectId = ${subjectId} WHERE userId = ${userId}`;
+    static async updateAssignPaperSetter(userId: number, subjectId: number,examId:number) {
+        const query = `UPDATE assign_paper_setter SET subjectId = ${subjectId}  WHERE userId = ${userId} and examId = ${examId}`;
         return await assignPaperSetter.query(query);
     }
 }
