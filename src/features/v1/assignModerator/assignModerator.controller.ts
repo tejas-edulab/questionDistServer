@@ -52,4 +52,34 @@ export default class AssignModeratorController {
         }
     }
 
+    static async updateAssignModerator(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body = req.body;
+            const backup = []
+           try{
+            if (body.subjectIds.length > 0) {
+                const promises = body.subjectIds.map(async (subject: any) => {
+                    const userId = body.userId;
+                    const subjectId = subject.id;
+                    const examId = body.examId
+                    const newData = { userId, subjectId, examId };
+                    await AssignModeratorUtils.deleteAssignModerator(userId,examId);
+                    return await AssignModeratorUtils.saveAssignModerator(newData);
+
+                });
+
+                await Promise.all(promises);
+
+                // If all saves are successful, send a success response
+                res.status(200).json({ message: "Assign Moderator operation completed successfully" });
+            }
+           }catch(err){
+            backup.push(backup)
+           }
+        } catch (error) {
+            next(error);
+        }
+
+} 
+
 } 

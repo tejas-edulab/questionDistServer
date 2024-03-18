@@ -74,4 +74,8 @@ export default class AssignModeratorUtils {
         return jsonParser(data);
     }
 
+    static async deleteAssignModerator(userId:number,examId:number){
+        return await assignModeraotor.delete({userId,examId})
+    }
+
 }
