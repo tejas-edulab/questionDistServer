@@ -61,4 +61,24 @@ export default class AssignSMEController {
         }
     }
 
+    static async updateAssignSME(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body = req.body;
+            if (body.subjects.length > 0) {
+                const promises = body.subjects.map(async (subject: any) => {
+                    const userId = body.userId;
+                    const subjectId = subject.id;
+                    return await AssignMeUtils.updateAssignSME(userId, subjectId);
+                });
+
+                await Promise.all(promises);
+
+                // If all saves are successful, send a success response
+                res.status(200).json({ message: "Assign SMEs operation completed successfully" });
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
 } 
