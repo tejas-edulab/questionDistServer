@@ -2,45 +2,6 @@ import { AppDataSource } from "../../../data-source";
 import { jsonParser } from "../../../helpers/common.helpers";
 import { QuestionBank } from "./questionBank.model";
 
-// import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
-// @Entity()
-// export class QuestionBank {
-
-//     @PrimaryGeneratedColumn()
-//     id: number
-
-//     @Column()
-//     label: string
-
-//     @Column()
-//     marks: number
-
-//     @Column()
-//     questionContent:string
-
-//     @Column()
-//     questionIndex:string
-
-//     @Column()
-//     subject:number
-
-//     @Column()
-//     topic:string
-
-//     @Column()
-//     type:string
-
-//     @Column()
-//     userId:number
-
-//     @CreateDateColumn()
-//     createdAt: Date;
-
-//     @UpdateDateColumn()
-//     updatedAt: Date;
-
-// }
-
 
 const questionBankRepository = AppDataSource.getRepository(QuestionBank);
 
@@ -56,6 +17,11 @@ export default class QuestionBankUtils {
     SELECT 
         assign_sme.subjectId,
         subject.name,
+        subject.oldSubjectCode,
+        subject.subjectCode,
+        subject.credits,
+        subject.subjectType,
+        subject.subjectTypeStatus,
         JSON_ARRAYAGG(
             JSON_OBJECT(
                 'id', question_bank.id,

@@ -12,6 +12,8 @@ const router = Router();
  */
 router.get('/', SubjectController.getAllSubjects);
 
+router.get('/:subjectId', SubjectController.getSubjectById);
+
 
 
 

@@ -13,4 +13,15 @@ export default class SubjectController {
         }
     }
 
+    static async getSubjectById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.subjectId
+            const subject = await SubjectRepository.fetchSubjectById(Number(id));
+            sendSuccessResponse(req, res, { subject })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
 }

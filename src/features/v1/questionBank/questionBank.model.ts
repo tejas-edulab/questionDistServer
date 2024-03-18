@@ -32,7 +32,10 @@ export class QuestionBank {
     @Column()
     userId: number
 
-    @Column()
+    @Column({
+        nullable: true,
+        default: null
+    })
     modifiedBy: number
 
     @CreateDateColumn()

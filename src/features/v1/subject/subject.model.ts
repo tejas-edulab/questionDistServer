@@ -8,51 +8,57 @@ export type ICredits = 'YES' | 'NO';
 @Entity()
 export default class Subject {
   @PrimaryGeneratedColumn()
-    id: number;
+  id: number;
 
   // Added for HSNC
   @Column({
     nullable: true,
   })
-    collegeName: string;
+  collegeName: string;
 
-    @Column({
-        nullable: true,
-    })
-    semesterId: number;
-    @Column({
-        nullable: true,
-    })
-    courseId: number;
-    @Column({
-        nullable: true,
-    })
-    semesterCode: string;
+  @Column({
+    nullable: true,
+  })
+  semesterId: number;
+  @Column({
+    nullable: true,
+  })
+  courseId: number;
+  @Column({
+    nullable: true,
+  })
+  semesterCode: string;
 
-    @Column({
-        nullable: true,
-    })
-    courseCode: string;
+  @Column({
+    nullable: true,
+  })
+  courseCode: string;
 
 
   @Column({ nullable: true, unique: true })
-    subjectCode: string;
+  subjectCode: string;
+
+  @Column({ nullable: true })
+  oldSubjectCode: string;
 
   @Column({ nullable: false })
-    subjectName: string;
+  subjectName: string;
+
+  @Column({ nullable: true })
+  subjectType: string;
 
   @Column({ nullable: false })
-    credits: number;
+  credits: number;
 
   @Column({ nullable: false, default: 0 })
-    externalMax:number;
+  externalMax: number;
 
   @Column({ nullable: false, default: 0 })
-    externalMin:number;
+  externalMin: number;
 
   @CreateDateColumn()
-    createdAt: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-    updatedAt: Date;
+  updatedAt: Date;
 }

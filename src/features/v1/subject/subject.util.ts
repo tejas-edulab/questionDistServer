@@ -14,8 +14,21 @@ export default class SubjectRepository {
         return subject;
     }
 
+    static async fetchSubjectById(subjectId: number) {
+        const query = `SELECT * FROM subject WHERE id = ${subjectId}`;
+        const data = await subjectRepository.query(query);
+        return data[0];
+    }
+
     static fetchAllSubjects = async () => {
         const query = `SELECT * FROM subject`;
         return await subjectRepository.query(query);
     }
+
+    static async getSubjectById(subjectId: number) {
+        const query = `SELECT * FROM subject WHERE id = ${subjectId}`;
+        const data = await subjectRepository.query(query);
+        return data[0];
+    }
+
 }
