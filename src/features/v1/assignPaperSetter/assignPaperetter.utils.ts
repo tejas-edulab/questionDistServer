@@ -117,4 +117,8 @@ export default class AssignPaperSetterUtils {
         const query = `UPDATE assign_paper_setter SET subjectId = ${subjectId}  WHERE userId = ${userId} and examId = ${examId}`;
         return await assignPaperSetter.query(query);
     }
+
+    static async deleteAssignPaperSetter(userId:number,examId:number){
+        return await assignPaperSetter.delete({userId,examId})
+    }
 }

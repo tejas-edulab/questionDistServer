@@ -68,12 +68,17 @@ export default class AssignPaperSetterController {
     static async updateAssignPaperSetter(req: Request, res: Response, next: NextFunction) {
         try {
             const body = req.body;
+            const backup = []
+           try{
             if (body.subjectIds.length > 0) {
                 const promises = body.subjectIds.map(async (subject: any) => {
                     const userId = body.userId;
                     const subjectId = subject.id;
                     const examId = body.examId
-                    return await AssignPaperSetterUtils.updateAssignPaperSetter(userId, subjectId,examId);
+                    const newData = { userId, subjectId, examId };
+                    await AssignPaperSetterUtils.deleteAssignPaperSetter(userId,examId);
+                    return await AssignPaperSetterUtils.saveAssignPaperSetter(newData);
+
                 });
 
                 await Promise.all(promises);
@@ -81,6 +86,9 @@ export default class AssignPaperSetterController {
                 // If all saves are successful, send a success response
                 res.status(200).json({ message: "Assign Paper Setter operation completed successfully" });
             }
+           }catch(err){
+            backup.push(backup)
+           }
         } catch (error) {
             next(error);
         }
