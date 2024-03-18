@@ -21,7 +21,7 @@ export default class QuestionBankController {
         try {
             const roles = req.user.role;
             if (roles.length === 1 && roles.includes(IRoles.SME)) {
-                const data = await QuestionBankUtils.getQuestionBank();
+                const data = await QuestionBankUtils.getQuestionBank(req.user.id);
                 sendSuccessResponse(req, res, { data })
             } else {
                 sendSuccessResponse(req, res, { message: "Yet to be implemented" })

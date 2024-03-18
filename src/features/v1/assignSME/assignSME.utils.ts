@@ -10,6 +10,11 @@ export default class AssignMeUtils {
         return await assignSME.save(data);
     }
 
+    static async updateAssignSME(userId: number, subjectId: number) {
+        const query = `UPDATE assign_sme SET subjectId = ${subjectId} WHERE userId = ${userId}`;
+        return await assignSME.query(query);
+    }
+
     static async getAssignSME() {
         const query = `SELECT 
         user.id AS userId, 
