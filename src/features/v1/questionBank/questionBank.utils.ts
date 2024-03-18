@@ -55,6 +55,7 @@ export default class QuestionBankUtils {
         const query = `
     SELECT 
         assign_sme.subjectId,
+        subject.name,
         JSON_ARRAYAGG(
             JSON_OBJECT(
                 'id', question_bank.id,
@@ -74,7 +75,7 @@ export default class QuestionBankUtils {
     LEFT JOIN 
         subject ON assign_sme.subjectId = subject.id
     LEFT JOIN 
-        question_bank ON subject.id = question_bank.subjectId
+        question_bank ON subject.id = question_bank.subject
     LEFT JOIN 
         user ON question_bank.userId = user.id
     WHERE 
@@ -89,5 +90,8 @@ export default class QuestionBankUtils {
 
     }
 
+    static async fetchQuestionBankBySubjectAndUser(subject:number,userId:number){
+        return await questionBankRepository.findOne({where:{subject,userId}})
+    }
 
 }

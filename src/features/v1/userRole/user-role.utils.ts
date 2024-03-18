@@ -25,4 +25,18 @@ export default class UserRoleRepository {
         LEFT JOIN roles r on r.id = u.roleId
         where u.userId=${userId}`)
     }
+
+    static getUserRoleById = async(userId)=>{
+            const data = await userRoleRepository.query(
+                `SELECT
+                JSON_ARRAYAGG( JSON_OBJECT( 'roleId', roleId, 'roleName', role ) ) AS userRoles 
+            FROM
+                user_role 
+            WHERE
+                userId = ${userId}
+            GROUP BY
+                userId`
+            )
+            return data[0]
+    }
 }
