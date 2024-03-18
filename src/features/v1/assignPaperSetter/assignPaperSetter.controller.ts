@@ -50,4 +50,19 @@ export default class AssignPaperSetterController {
         }
     }
 
+    static async getAssignPaperSetterByUserIdAndExamId(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId = req.params.userId;
+            const examId = req.params.examId;
+            const data = await AssignPaperSetterUtils.getAssignPaperSetterByUserIdAndExamId(Number(userId),Number(examId));
+            res.status(200).json({
+                message: 'Paper Setter assigned get successfully',
+                data: data,
+                error: null
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
 } 

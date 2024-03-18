@@ -73,10 +73,10 @@ export default class AssignPaperSetterUtils {
         user.id = ${userId}
         AND exam.id = ${examId}
     GROUP BY
-        user.id;
+        user.id and assign_paper_setter.examId;
         `;
         const data = await assignPaperSetter.query(query);
-        return jsonParser(data);
+        return jsonParser(data[0]);
     }
 
 
@@ -107,7 +107,7 @@ export default class AssignPaperSetterUtils {
         Left JOIN
         semester ON exam.semesterId = semester.id
     GROUP BY
-        user.id , exam.id;
+        user.id , exam.id, assign_paper_setter.examId;
         `;
         const data = await assignPaperSetter.query(query);
         return jsonParser(data);

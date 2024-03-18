@@ -36,7 +36,7 @@ export default class AssignModeratorUtils {
         Left JOIN
         semester ON exam.semesterId = semester.id
     GROUP BY
-        user.id , exam.id;`;
+        user.id , exam.id, assign_moderator.examId;`;
         const data = await assignModeraotor.query(query);
         return jsonParser(data);
     }

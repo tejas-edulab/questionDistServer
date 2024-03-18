@@ -11,7 +11,7 @@ export default class AssignMeUtils {
     }
 
     static async updateAssignSME(userId: number, subjectId: number) {
-        const query = `UPDATE assign_sme SET subjectId = ${subjectId} WHERE userId = ${userId}`;
+        const query = `INSERT INTO assign_sme (userId, subjectId) VALUES (${userId}, ${subjectId}) ON DUPLICATE KEY UPDATE userId = ${userId}, subjectId = ${subjectId}`;
         return await assignSME.query(query);
     }
 
