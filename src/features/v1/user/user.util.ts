@@ -15,6 +15,29 @@ export default class UserRepository {
         return await userRepostory.findOne({ where: { userId } });
     }
 
+    public static async getUserDataById(userId: string) {
+        const query = `SELECT
+        user.id,
+        user.firstName,
+        user.lastName,
+        user.email,
+        user.username,
+        user.userId,
+        JSON_ARRAYAGG(JSON_OBJECT('roleId', user_role.roleId, 'roleName', user_role.role)) AS role
+    FROM
+        user
+    LEFT JOIN user_role ON user.id = user_role.userId
+    WHERE
+        user.userId = '${userId}'`
+        const data = await userRepostory.query(query);
+        if (data && data.length > 0) {
+            return data[0]
+        } else {
+            return null
+        }
+    }
+
+
     public static async findUserById(id: number) {
         return await userRepostory.findOne({ where: { id } });
     }
@@ -76,11 +99,11 @@ export default class UserRepository {
         return user;
     };
 
-    static fetchEvaluatorByRole = async (role) =>{
-        return userRepostory.find({where:{role}})
+    static fetchEvaluatorByRole = async (role) => {
+        return userRepostory.find({ where: { role } })
     }
 
-    static fetchMultiUser = async()=>{
+    static fetchMultiUser = async () => {
         const data = await userRepostory.query(`
     SELECT 
             u.id,
@@ -100,15 +123,15 @@ export default class UserRepository {
     GROUP BY 
     u.id;
         `)
-        if(data.length > 0){
-            const resData = data.map(item=>{
+        if (data.length > 0) {
+            const resData = data.map(item => {
                 item.rolesInfo = JSON.parse(item.rolesInfo)
                 return item
             })
 
             return resData
         }
-       
+
         return data
     }
 

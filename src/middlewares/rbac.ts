@@ -41,8 +41,6 @@ const Rbac = (roles: IRoles[]) => async (req: Request, res: Response, next: Next
             });
         });
 
-
-
         // Extract the bearer token from the request headers
         const token = req.headers.authorization?.substring(7);
         if (!token) return next(ApiError.forbidden());
@@ -55,7 +53,6 @@ const Rbac = (roles: IRoles[]) => async (req: Request, res: Response, next: Next
         if (!keycloakClientId) throw Error('Environment: KEYCLOAK_CLIENTID is not defined');
 
 
-        console.log(userInfo.resource_access)
         // Retrieve the user roles from the decoded token
         const userRoles = userInfo.resource_access[keycloakClientId].roles;
 
@@ -64,7 +61,8 @@ const Rbac = (roles: IRoles[]) => async (req: Request, res: Response, next: Next
 
         // Get userInfo
         const userId = userInfo.sub ? userInfo.sub : '';
-        const user = await UserRepository.findUserByUserId(userId);
+
+        const user = await UserRepository.getUserDataById(userId);
 
         // Adding it in req.user
         if (user) req.user = user;
