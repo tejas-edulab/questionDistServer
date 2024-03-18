@@ -9,5 +9,7 @@ router.post('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), 
 router.get('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignPaperSetterController.getAssignPaperSetter);
 
 router.get('/:userId/:examId', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignPaperSetterController.getAssignPaperSetterByUserIdAndExamId);
+router.put('/', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN, IRoles.COE_STAFF]), AssignPaperSetterController.updateAssignPaperSetter);
+
 
 export default router;
