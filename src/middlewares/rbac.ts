@@ -6,6 +6,7 @@ import ApiError from '../utils/api-error';
 import logger from '../utils/winston';
 import UserRepository from '../features/v1/user/user.util';
 import { User } from '../features/v1/user/user.model';
+import { jsonParser } from '../helpers/common.helpers';
 
 /**
  * Middleware for role-based access control (RBAC) using Keycloak.
@@ -63,10 +64,10 @@ const Rbac = (roles: IRoles[]) => async (req: Request, res: Response, next: Next
         const userId = userInfo.sub ? userInfo.sub : '';
 
         const user = await UserRepository.getUserDataById(userId);
-
+        
         // Adding it in req.user
-        if (user) req.user = user;
-
+        if (user) req.user = jsonParser(user);
+     
         // Check if the user has any of the required roles
         const hasRole = roles.some((role) => userRoles.includes(role));
 

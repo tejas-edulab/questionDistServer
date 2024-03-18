@@ -28,7 +28,10 @@ export default class UserRepository {
         user
     LEFT JOIN user_role ON user.id = user_role.userId
     WHERE
-        user.userId = '${userId}'`
+        user.userId = '${userId}'
+    group by
+        user.id
+        `
         const data = await userRepostory.query(query);
         if (data && data.length > 0) {
             return data[0]

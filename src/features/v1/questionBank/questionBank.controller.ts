@@ -24,17 +24,20 @@ export default class QuestionBankController {
     static async getQuestionBank(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.user.id
-            const role = await UserRoleRepository.getUserRoleById(id)
-            const parseRole = JSON.parse(role.userRoles)
-            const isSME = parseRole.filter((obj)=> obj.roleName === 'SME')
-         
-            if(isSME && isSME.length === 1){
-                const data = await QuestionBankUtils.getQuestionBank(id);
-                sendSuccessResponse(req, res, { data })
-            }else{
-                sendSuccessResponse(req, res, { message: "Yet to be implemented" })
+            const roles = req.user.role
+            console.log(roles)
+            if (Array.isArray(roles) ) {
+                const isSME = roles.filter((obj: any) => obj.roleName === IRoles.SME);
+                if ( isSME && roles.length === 1) {
+                    const data = await QuestionBankUtils.getQuestionBank(id);
+                    sendSuccessResponse(req, res, { data });
+                } else {
+                    sendSuccessResponse(req, res, { message: "Yet to be implemented" });
+                }
+            } else {
+                sendSuccessResponse(req, res, { message: "Roles not found or invalid" });
             }
-            
+           
         } catch (error) {
             next(error)
         }
