@@ -17,7 +17,7 @@ export default class PaperSetterController {
                 const isPaperSetter = roles.filter((obj: any) => obj.roleName === IRoles.PAPER_SETTER);
                 if (isPaperSetter) {
                     const data = await PaperSetterUtils.getPaperSetterByUserIdAndExamId(user.id, Number(req.query.examId));
-                    sendSuccessResponse(req, res, { data });
+                    sendSuccessResponse(req, res, data );
                 } else {
                     sendSuccessResponse(req, res, { message: "Yet to be implemented" });
                 }

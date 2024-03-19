@@ -18,6 +18,7 @@ import { AssignPaperSetter } from "./features/v1/assignPaperSetter/assignPaperSe
 import { QuestionBank } from "./features/v1/questionBank/questionBank.model";
 import { UserRole } from "./features/v1/userRole/userRole.model";
 import { AssignModerator } from "./features/v1/assignModerator/assignModerator.model";
+import { PaperSetter } from "./features/v1/paperSetter/paper-setter.model";
 import { QuestionSet } from "./features/v1/question_set/question_set/question_set.model";
 
 // Load the .env file
@@ -35,13 +36,13 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'root',
     database: process.env.DB_NAME || 'osm',
-    synchronize: false,
+    synchronize: true,
     logging: false,
     entities: [User, Roles,
         Course, Subject, Semester, College, CollegeCourseOffered,
         ExamSubject, Uploads,
         ActivityTracker,
-        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator, QuestionSet
+        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator, PaperSetter, QuestionSet
     ],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],

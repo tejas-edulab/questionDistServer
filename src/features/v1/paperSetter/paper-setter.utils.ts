@@ -55,7 +55,7 @@ export default class PaperSetterUtils {
             semester.semName,
             CONCAT('[', GROUP_CONCAT(JSON_OBJECT('paperSetterId', paper_setter.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
         FROM
-            paper_setter
+        assign_paper_setter as paper_setter
         LEFT JOIN
             user ON paper_setter.userId = user.id
         LEFT JOIN
@@ -73,8 +73,10 @@ export default class PaperSetterUtils {
         GROUP BY
             user.id , exam.id, paper_setter.examId;`;
         const data = await paperSetter.query(query);
-        return jsonParser(data);
-
+        if (data && data.length > 0) {
+            return jsonParser(data[0]);
+        }
+        return []
     }
 
 }

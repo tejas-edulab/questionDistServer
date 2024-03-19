@@ -23,6 +23,14 @@ export default class Subject {
   @Column({
     nullable: true,
   })
+  @Column({
+    nullable: true,
+  })
+  name: string;
+
+  @Column({
+    nullable: true,
+  })
   courseId: number;
   @Column({
     nullable: true,
@@ -46,6 +54,9 @@ export default class Subject {
 
   @Column({ nullable: true })
   subjectType: string;
+  
+  @Column({ nullable: true })
+  subjectTypeStatus: string
 
   @Column({ nullable: false })
   credits: number;
