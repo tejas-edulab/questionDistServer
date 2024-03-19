@@ -25,8 +25,7 @@ export default class QuestionBankController {
         try {
             const id = req.user.id
             const roles = req.user.role
-            console.log(roles)
-            if (Array.isArray(roles)) {
+            if (Array.isArray(roles) ) {
                 const isSME = roles.filter((obj: any) => obj.roleName === IRoles.SME);
                 if (isSME && roles.length === 1) {
                     const data = await QuestionBankUtils.getQuestionBank(id);
@@ -50,6 +49,16 @@ export default class QuestionBankController {
             const data = await QuestionBankUtils.getQuestionBankBySubject(Number(id), Number(user.id));
             sendSuccessResponse(req, res, { data });
         } catch (error) {
+            next(error)
+        }
+    }
+
+    static async deleteQuestionBankById(req:Request,res:Response,next:NextFunction){
+        try{
+            const id = req.params.id
+             await QuestionBankUtils.deleteQuestionBankById(Number(id))
+            sendSuccessResponse(req,res,{message:"deleted successfully"})
+        }catch(error){
             next(error)
         }
     }

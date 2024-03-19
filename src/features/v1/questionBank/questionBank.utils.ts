@@ -93,4 +93,8 @@ export default class QuestionBankUtils {
         return await questionBankRepository.findOne({ where: { subject, userId } })
     }
 
+    static async deleteQuestionBankById(id:number){
+        return await questionBankRepository.delete({id})
+    }
+
 }

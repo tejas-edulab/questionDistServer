@@ -10,4 +10,6 @@ router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.PAPER_SETTER, IRole
 
 router.get('/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.COE_STAFF]), QuestionBankController.getQuestionBankById);
 
+router.delete('/:id',Rbac([IRoles.SUPER_ADMIN,IRoles.SME]),QuestionBankController.deleteQuestionBankById)
+
 export default router;
