@@ -16,8 +16,22 @@ export default class AssignMeUtils {
     }
 
     static async getAssignSME() {
-        const query = `SELECT * FROM assign_sme`;
-        return await assignSME.query(query);
+        const query = `SELECT 
+        user.id AS userId,
+        user.firstname,
+        user.lastname,
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignSmeId', assign_sme.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+    FROM
+        assign_sme
+    LEFT JOIN
+        user ON assign_sme.userId = user.id
+    LEFT JOIN
+        subject ON assign_sme.subjectId = subject.id
+    GROUP BY
+        user.id;
+        `;
+        const data = await assignSME.query(query);
+        return jsonParser(data);
     }
 
     static async getAssignSMEByUserId(userId: number) {
@@ -40,7 +54,7 @@ export default class AssignMeUtils {
         const data = await assignSME.query(query);
         return jsonParser(data);
     }
- 
+
     static async deleteAssignSme(userId: number) {
         return await assignSME.delete({ userId })
     }
