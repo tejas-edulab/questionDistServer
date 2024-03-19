@@ -46,7 +46,8 @@ export default class QuestionBankController {
     static async getQuestionBankById(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            const data = await QuestionBankUtils.getQuestionBankBySubject(Number(id));
+            const user = req.user;
+            const data = await QuestionBankUtils.getQuestionBankBySubject(Number(id), Number(user.id));
             sendSuccessResponse(req, res, { data });
         } catch (error) {
             next(error)

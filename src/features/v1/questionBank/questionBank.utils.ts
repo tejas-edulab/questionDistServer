@@ -14,7 +14,7 @@ export default class QuestionBankUtils {
     static async getQuestionBank(userId: number) {
         // get the subjects from assign_sme for the user and then get the questions from question bank for the subjects group by subject
         const query = `
-    SELECT 
+        SELECT 
         assign_sme.subjectId,
         subject.name,
         subject.oldSubjectCode,
@@ -22,32 +22,36 @@ export default class QuestionBankUtils {
         subject.credits,
         subject.subjectType,
         subject.subjectTypeStatus,
-        JSON_ARRAYAGG(
-            JSON_OBJECT(
-                'id', question_bank.id,
-                'label', question_bank.label,
-                'marks', question_bank.marks,
-                'questionContent', question_bank.questionContent,
-                'questionIndex', question_bank.questionIndex,
-                'subject', question_bank.subject,
-                'topic', question_bank.topic,
-                'type', question_bank.type,
-                'userId', question_bank.userId,
-                'subjectName', subject.name
-            )
+        COALESCE(
+            (
+                SELECT JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'id', question_bank.id,
+                        'label', question_bank.label,
+                        'marks', question_bank.marks,
+                        'questionContent', question_bank.questionContent,
+                        'questionIndex', question_bank.questionIndex,
+                        'subject', question_bank.subject,
+                        'topic', question_bank.topic,
+                        'type', question_bank.type,
+                        'userId', question_bank.userId,
+                        'subjectName', subject.name
+                    )
+                )
+                FROM question_bank
+                WHERE subject.id = question_bank.subject AND question_bank.userId = ${userId}
+            ),
+            JSON_ARRAY()
         ) AS questionBankData
     FROM 
         assign_sme
     LEFT JOIN 
         subject ON assign_sme.subjectId = subject.id
-    LEFT JOIN 
-        question_bank ON subject.id = question_bank.subject
-    LEFT JOIN 
-        user ON question_bank.userId = user.id
     WHERE 
-        assign_sme.userId = ${userId} 
+        assign_sme.userId = ${userId}
     GROUP BY 
         assign_sme.subjectId;
+    
 `;
 
         const data = await questionBankRepository.query(query);
@@ -56,7 +60,7 @@ export default class QuestionBankUtils {
 
     }
 
-    static async getQuestionBankBySubject(subject: number) {
+    static async getQuestionBankBySubject(subject: number, userId: number) {
         const query = `SELECT
         question_bank.id,
         question_bank.label,
@@ -75,6 +79,7 @@ export default class QuestionBankUtils {
         subject ON question_bank.subject = subject.id
     WHERE
         question_bank.subject = ${subject}
+        AND question_bank.userId = ${userId}
     `;
         const data = await questionBankRepository.query(query);
         if (data && data.length > 0) {
