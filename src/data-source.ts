@@ -18,6 +18,7 @@ import { AssignPaperSetter } from "./features/v1/assignPaperSetter/assignPaperSe
 import { QuestionBank } from "./features/v1/questionBank/questionBank.model";
 import { UserRole } from "./features/v1/userRole/userRole.model";
 import { AssignModerator } from "./features/v1/assignModerator/assignModerator.model";
+import {  QuestionSetNew } from "./features/v1/question_set/question_set.model";
 
 // Load the .env file
 dotenv.config();
@@ -40,8 +41,7 @@ export const AppDataSource = new DataSource({
         Course, Subject, Semester, College, CollegeCourseOffered,
         ExamSubject, Uploads,
         ActivityTracker,
-        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator
-    ],
+        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator,QuestionSetNew],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],
     subscribers: [],

@@ -31,7 +31,7 @@ export default class QuestionBankController {
                     const data = await QuestionBankUtils.getQuestionBank(id);
                     sendSuccessResponse(req, res, { data });
                 } else {
-                    sendSuccessResponse(req, res, { message: "Yet to be implemented" });
+                    sendSuccessResponse(req, res, { data: [] });
                 }
             } else {
                 sendSuccessResponse(req, res, { message: "Roles not found or invalid" });
