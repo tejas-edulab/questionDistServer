@@ -7,4 +7,6 @@ const router = Router();
 
 router.post('/', Rbac([IRoles.SUPER_ADMIN, IRoles.SME]), QuestionBankModuleController.createQuestionBankModule);
 
+router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.SME]), QuestionBankModuleController.getQuestionBankModule);
+
 export default router;
