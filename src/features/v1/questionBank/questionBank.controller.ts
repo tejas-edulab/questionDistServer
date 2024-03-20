@@ -12,7 +12,7 @@ export default class QuestionBankController {
     static async createQuestionBank(req: Request, res: Response, next: NextFunction) {
         try {
             const userId = req.user.id
-            const newData = req.body.map((value) => ({ ...value, userId }));
+            const newData = req.body.map((value) => ({ ...value, userId, modifiedBy: userId }))
             const result = await QuestionBankUtils.saveQuestionBank(newData)
             if (result) sendSuccessResponse(req, res, { message: "Successfully stored" })
         } catch (error) {
@@ -25,11 +25,19 @@ export default class QuestionBankController {
         try {
             const id = req.user.id
             const roles = req.user.role
-            if (Array.isArray(roles) ) {
-                const isSME = roles.filter((obj: any) => obj.roleName === IRoles.SME);
-                if (isSME && roles.length === 1) {
-                    const data = await QuestionBankUtils.getQuestionBank(id);
-                    sendSuccessResponse(req, res, { data });
+            if (Array.isArray(roles)) {
+                const checkRole = roles.filter((obj: any) => obj.roleName === IRoles.SME || obj.roleName === IRoles.SUPER_ADMIN);
+                console.log("checkRole", checkRole);
+
+                if (checkRole && checkRole.length > 0) {
+                    // check if role includes SUPER_ADMIN
+                    if (checkRole.some((obj: any) => obj.roleName === IRoles.SUPER_ADMIN)) {
+                        const data = await QuestionBankUtils.getAllQuestionBank();
+                        sendSuccessResponse(req, res, { data });
+                    } else {
+                        const data = await QuestionBankUtils.getQuestionBank(id);
+                        sendSuccessResponse(req, res, { data });
+                    }
                 } else {
                     sendSuccessResponse(req, res, { data: [] });
                 }
@@ -53,12 +61,12 @@ export default class QuestionBankController {
         }
     }
 
-    static async deleteQuestionBankById(req:Request,res:Response,next:NextFunction){
-        try{
+    static async deleteQuestionBankById(req: Request, res: Response, next: NextFunction) {
+        try {
             const id = req.params.id
-             await QuestionBankUtils.deleteQuestionBankById(Number(id))
-            sendSuccessResponse(req,res,{message:"deleted successfully"})
-        }catch(error){
+            await QuestionBankUtils.deleteQuestionBankById(Number(id))
+            sendSuccessResponse(req, res, { message: "deleted successfully" })
+        } catch (error) {
             next(error)
         }
     }

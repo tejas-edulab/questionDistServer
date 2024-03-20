@@ -64,12 +64,14 @@ export default class AssignSMEController {
     static async updateAssignSME(req: Request, res: Response, next: NextFunction) {
         try {
             const body = req.body;
-            if (body.subjects.length > 0) {
-                const promises = body.subjects.map(async (subject: any) => {
+            console.log("req.body", req.body);
+
+            if (body.subjectId.length > 0) {
+                const promises = body.subjectId.map(async (subject: any) => {
                     const userId = body.userId;
                     const subjectId = subject.id;
                     await AssignMeUtils.deleteAssignSme(userId);
-                    return await AssignMeUtils.saveAssignSME({userId, subjectId});
+                    return await AssignMeUtils.saveAssignSME({ userId, subjectId });
                 });
                 await Promise.all(promises);
                 // If all saves are successful, send a success response

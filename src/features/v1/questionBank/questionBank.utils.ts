@@ -93,8 +93,51 @@ export default class QuestionBankUtils {
         return await questionBankRepository.findOne({ where: { subject, userId } })
     }
 
-    static async deleteQuestionBankById(id:number){
-        return await questionBankRepository.delete({id})
+    static async deleteQuestionBankById(id: number) {
+        return await questionBankRepository.delete({ id })
     }
 
+    static async getAllQuestionBank() {
+        const query = `SELECT
+        subject.id AS subjectId,
+        subject.name AS name,
+        subject.oldSubjectCode,
+        subject.subjectCode,
+        subject.credits,
+        subject.subjectType,
+        subject.subjectTypeStatus,
+        COALESCE(
+            (
+                SELECT JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'id', qb.id,
+                        'label', qb.label,
+                        'marks', qb.marks,
+                        'questionContent', qb.questionContent,
+                        'questionIndex', qb.questionIndex,
+                        'subject', qb.subject,
+                        'topic', qb.topic,
+                        'type', qb.type,
+                        'userId', qb.userId,
+                        'subjectName', subject.name
+                    )
+                )
+                FROM question_bank AS qb
+                WHERE qb.subject = subject.id
+            ),
+            JSON_ARRAY()
+        ) AS questionBankData
+    FROM 
+        subject
+    LEFT JOIN 
+        assign_sme ON subject.id = assign_sme.subjectId
+    GROUP BY 
+        subject.id;
+    `;
+        const data = await questionBankRepository.query(query);
+        if (data && data.length > 0) {
+            return jsonParser(data);
+        }
+        return [];
+    }
 }

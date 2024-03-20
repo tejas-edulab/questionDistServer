@@ -16,4 +16,5 @@ public/
 logs/
 .env
 package-lock.json
+migration/
 
