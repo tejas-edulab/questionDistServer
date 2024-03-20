@@ -70,4 +70,14 @@ export default class QuestionBankController {
             next(error)
         }
     }
+
+    static async getQuestionBankBySubject(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id
+            const data = await QuestionBankUtils.getQuestionBankBySubjectId(Number(id));
+            sendSuccessResponse(req, res, { data });
+        } catch (error) {
+            next(error)
+        }
+    }
 }

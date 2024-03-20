@@ -41,6 +41,7 @@ export default class QuestionSetUtils {
         AND question_set.examId = ${examId}
         AND question_set.subjectId = ${subjectId};    
     `;
+        console.log("query", query);
 
         const data = await questionSetRepository.query(query);
         if (data && data.length > 0) {

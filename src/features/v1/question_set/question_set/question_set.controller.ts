@@ -33,6 +33,8 @@ export default class QuestionSetController {
                         const data = await QuestionSetUtils.getQuestionSet();
                         sendSuccessResponse(req, res, { data });
                     } else {
+                        console.log("req.query", req.query.examId, req.query.subjectId);
+
                         const data = await QuestionSetUtils.getQuestionSetByUserIdExamAndSubjectId(Number(id), Number(req.query.examId), Number(req.query.subjectId));
                         sendSuccessResponse(req, res, { data });
                     }

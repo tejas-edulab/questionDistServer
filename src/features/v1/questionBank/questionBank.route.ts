@@ -10,6 +10,8 @@ router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.COE_HEAD, IRoles.CO
 
 router.get('/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.COE_STAFF]), QuestionBankController.getQuestionBankById);
 
-router.delete('/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.SME]), QuestionBankController.deleteQuestionBankById)
+router.delete('/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.SME]), QuestionBankController.deleteQuestionBankById);
+
+router.get('/subject/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.COE_STAFF]), QuestionBankController.getQuestionBankBySubject);
 
 export default router;
