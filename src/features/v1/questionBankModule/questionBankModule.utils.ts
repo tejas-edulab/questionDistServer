@@ -10,4 +10,16 @@ export default class QuestionBankModuleUtils {
         return await questionBankModuleRepository.save(data);
     }
 
+    static getQuestionBankModuleByUserId = async (userId: number) => {
+        const query = `SELECT * FROM question_bank_module WHERE userId = ${userId}`;
+        const data = await questionBankModuleRepository.query(query);
+        return data;
+    }
+
+    static getAllQuestionBankModule = async () => {
+        const query = `SELECT * FROM question_bank_module`;
+        const data = await questionBankModuleRepository.query(query);
+        return data;
+    }
+
 }
