@@ -1,5 +1,6 @@
 
 import { AppDataSource } from "../../../../data-source";
+import { jsonParser } from "../../../../helpers/common.helpers";
 import { QuestionSet } from "./question_set.model";
 
 const questionSetRepository = AppDataSource.getRepository(QuestionSet);
@@ -25,7 +26,8 @@ export default class QuestionSetUtils {
         exam.month,
         exam.year,
         user.firstname,
-        user.lastname
+        user.lastname,
+        question_set.questions
     FROM
         question_set
     LEFT JOIN
@@ -37,13 +39,14 @@ export default class QuestionSetUtils {
     WHERE
         question_set.userId = ${userId}
         AND question_set.examId = ${examId}
-        AND question_set.subjectId = ${subjectId}
-    GROUP BY
-        question_set.userId, question_set.setName;
+        AND question_set.subjectId = ${subjectId};    
     `;
 
         const data = await questionSetRepository.query(query);
-        return data;
+        if (data && data.length > 0) {
+            return jsonParser(data);
+        }
+        return []
     }
 
 

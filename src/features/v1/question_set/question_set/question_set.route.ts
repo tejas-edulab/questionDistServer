@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/', Rbac([IRoles.PAPER_SETTER, IRoles.COE_HEAD, IRoles.SUPER_ADMIN]), QuestionSetController.createQuestionSet);
 
-router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.SME, IRoles.COE_HEAD, IRoles.COE_STAFF]), QuestionSetController.getQuestionSet);
+router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.PAPER_SETTER, IRoles.COE_HEAD]), QuestionSetController.getQuestionSet);
 
 
 export default router;
