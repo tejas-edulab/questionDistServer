@@ -6,7 +6,7 @@ const questionSetRepository = AppDataSource.getRepository(QuestionSet);
 
 export default class QuestionSetUtils {
 
-    static async createQuestionSet(data: QuestionSet[]) {
+    static async createQuestionSet(data: QuestionSet) {
         return await questionSetRepository.save(data);
     }
 
