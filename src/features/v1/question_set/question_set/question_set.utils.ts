@@ -113,7 +113,7 @@ export default class QuestionSetUtils {
         if (data && data.length > 0) {
             return jsonParser(data[0]);
         }
-        return []
+        return {}
     }
 
 }
