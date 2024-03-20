@@ -50,4 +50,13 @@ export default class QuestionSetController {
         }
     }
 
+    static async getQuestionSetById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id
+            const data = await QuestionSetUtils.getQuestionSetById(Number(id));
+            sendSuccessResponse(req, res, { data });
+        } catch (error) {
+            next(error)
+        }
+    }
 } 

@@ -9,5 +9,7 @@ router.post('/', Rbac([IRoles.PAPER_SETTER, IRoles.COE_HEAD, IRoles.SUPER_ADMIN]
 
 router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.PAPER_SETTER, IRoles.COE_HEAD]), QuestionSetController.getQuestionSet);
 
+router.get('/:id', Rbac([IRoles.SUPER_ADMIN, IRoles.PAPER_SETTER, IRoles.COE_HEAD]), QuestionSetController.getQuestionSetById);
+
 
 export default router;
