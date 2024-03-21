@@ -32,6 +32,9 @@ export class QuestionBank {
     @Column()
     userId: number
 
+    @Column({ nullable: true, default: null })
+    subjectModuleId: number
+
     @Column({
         nullable: true,
         default: null

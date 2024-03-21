@@ -9,7 +9,9 @@ export default class QuestionBankModuleController {
         try {
             const user = req.user;
             const userId = user.id
-            const data = await QuestionBankModuleUtils.saveQuestionBankModule({ ...req.body, userId: userId });
+            console.log("req.body", req.body);
+
+            const data = await QuestionBankModuleUtils.saveQuestionBankModule({ ...req.body, userId: userId, minMarks: Number(req.body.minMarks), maxMarks: Number(req.body.maxMarks) })
             if (data) sendSuccessResponse(req, res, { message: "Successfully stored" })
         } catch (error) {
             next(error)
@@ -21,6 +23,8 @@ export default class QuestionBankModuleController {
             const user = req.user;
             const roles = user.role;
 
+            console.log("req.body", user);
+
             if (Array.isArray(roles)) {
                 const checkRoles = roles.filter((obj: any) => obj.roleName === IRoles.SUPER_ADMIN || obj.roleName === IRoles.COE_HEAD, IRoles.COE_STAFF);
 
@@ -28,6 +32,8 @@ export default class QuestionBankModuleController {
                     const data = await QuestionBankModuleUtils.getAllQuestionBankModule(Number(req.query.subjectId));
                     sendSuccessResponse(req, res, { data });
                 } else {
+                    console.log("req.query", req.query.subjectId);
+
                     const data = await QuestionBankModuleUtils.getQuestionBankModuleByUserId(user.id, Number(req.query.subjectId))
                     sendSuccessResponse(req, res, { data });
                 }

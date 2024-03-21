@@ -6,9 +6,16 @@ export default class AssignSMEController {
 
     static async createAssignSME(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log("req.body", req.body);
-
             const subjects = req.body.subjectId;
+
+            const userId = req.body.userId;
+
+            const ifExists = await AssignMeUtils.getAssignSMEByUserId(Number(userId));
+
+            if (ifExists && ifExists.length > 0) return res.status(400).json({
+                error: "Already assigned subjects to this user, please update instead",
+                data: null
+            });
 
             if (subjects && subjects.length > 0) {
                 const promises = subjects.map(async (subject: any) => {
