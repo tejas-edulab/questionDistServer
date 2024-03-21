@@ -35,6 +35,12 @@ export class QuestionBankModule {
     })
     userId: number
 
+    @Column({
+        nullable: true,
+        default: null
+    })
+    subjectId: number
+
     @CreateDateColumn()
     createdAt: Date;
 

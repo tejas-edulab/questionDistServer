@@ -19,19 +19,18 @@ export default class QuestionBankModuleController {
     static async getQuestionBankModule(req: Request, res: Response, next: NextFunction) {
         try {
             const user = req.user;
-            const roles = user.role
+            const roles = user.role;
 
             if (Array.isArray(roles)) {
                 const checkRoles = roles.filter((obj: any) => obj.roleName === IRoles.SUPER_ADMIN || obj.roleName === IRoles.COE_HEAD, IRoles.COE_STAFF);
 
                 if (checkRoles && checkRoles.length > 0) {
-                    const data = await QuestionBankModuleUtils.getAllQuestionBankModule();
+                    const data = await QuestionBankModuleUtils.getAllQuestionBankModule(Number(req.query.subjectId));
                     sendSuccessResponse(req, res, { data });
                 } else {
-                    const data = await QuestionBankModuleUtils.getQuestionBankModuleByUserId(user.id);
+                    const data = await QuestionBankModuleUtils.getQuestionBankModuleByUserId(user.id, Number(req.query.subjectId))
                     sendSuccessResponse(req, res, { data });
                 }
-
             } else {
                 sendSuccessResponse(req, res, { data: [] });
             }
