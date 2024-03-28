@@ -42,6 +42,8 @@ export default class RoleRepositories {
     };
 
     static fetchRoles = async()=>{
-        return await roleRepository.find({ where:{ roleName: Not(IRoles.SUPER_ADMIN) }})
+        const query = `select id,roleId,createdAt, updatedAt, roleName as role from roles where roleName!= 'SUPER_ADMIN';`;
+        const data = await AppDataSource.query(query);
+        return data;
     }
 }

@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
 import { Router } from 'express';
 import users from './user/user.route';
-
-
 import keycloak from './keycloak/keycloak.route'
 import script from './script/script.route'
 import exam from './exam/exam.route'
@@ -16,9 +14,9 @@ import subject from './subject/subject.route';
 import questionSet from './question_set/question_set/question_set.route';
 import paperSetter from './paperSetter/paper-setter.route';
 import questionBankModule from './questionBankModule/questionBankModule.route';
+
 const router = Router();
 dotenv.config();
-
 const environment = process.env.NODE_ENV || 'development';
 
 interface IRoutes {

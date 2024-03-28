@@ -1,39 +1,44 @@
-import { NextFunction, Request, Response } from 'express';
-import logger from '../../../utils/winston';
-import UserRepository from './user.util';
-import ApiError from '../../../utils/api-error';
-import sendSuccessResponse from '../../../middlewares/success-handler';
-import { IRoles } from './user.types';
-
+import { NextFunction, Request, Response } from "express";
+import UserRepository from "./user.util";
+import sendSuccessResponse from "../../../middlewares/success-handler";
+import { getSingleUserSchema } from "./user.validator";
+import ApiError from "../../../utils/api-error";
 
 export default class UserController {
-
-    public static async getMultiUsers(req: Request, res: Response, next: NextFunction) {
-        try{
-            const result = await UserRepository.fetchMultiUser()
-            sendSuccessResponse(req,res,{result})
-        }catch(err){
-            next(err)
-        }
+  static async getMultiUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = await UserRepository.fetchMultiUser();
+      sendSuccessResponse(req, res, { users });
+    } catch (err) {
+      next(err);
     }
+  }
 
-    public static async getMyInfo(req: Request, res: Response, next: NextFunction) {
-        try {
-            res.send(req.user);
-
-        } catch (error) {
-            next(error);
-        }
+  static async getSingleUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = await getSingleUserSchema.validateAsync(req.query);
+      const user = await UserRepository.fetchSingleUserById(id);
+      if (!user) return next(ApiError.notFound());
+      sendSuccessResponse(req, res, { user });
+    } catch (e) {
+      next(e);
     }
+  }
 
-    // public static async getEvaluator(req:Request,res:Response,next:NextFunction){
-    //     try{
-    //         const result = await UserRepository.fetchEvaluatorByRole(IRoles.EVALUATOR)
-    //         sendSuccessResponse(req,res,{result})
-    //     }catch(error){
-    //         next(error)
-    //     }
-    // }
+  static async getMyInfo(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.send(req.user);
+    } catch (error) {
+      next(error);
+    }
+  }
 
-  
+  // public static async getEvaluator(req:Request,res:Response,next:NextFunction){
+  //     try{
+  //         const result = await UserRepository.fetchEvaluatorByRole(IRoles.EVALUATOR)
+  //         sendSuccessResponse(req,res,{result})
+  //     }catch(error){
+  //         next(error)
+  //     }
+  // }
 }

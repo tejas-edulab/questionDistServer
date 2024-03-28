@@ -27,3 +27,15 @@ export interface IKeycloakRole {
     clientRole: boolean,
     containerId: string
 }
+
+export interface IfetchMultiUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  roleInfo: {
+    roleId: number;
+    role: string;
+  }[];
+}

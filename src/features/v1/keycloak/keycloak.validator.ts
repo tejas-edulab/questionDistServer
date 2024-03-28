@@ -27,21 +27,49 @@ import { IRoles, ICreateRoles } from '../user/user.types';
 // });
 
 export const keycloakRegisterSchema = Joi.object({
-    firstName: Joi.string().required().messages({
-        'any.required': 'Firstname is required',
-    }),
-    lastName: Joi.string().required().messages({
-        'any.required': 'Lastname is required',
-    }),
-    email: Joi.string().email().required().messages({
-        'any.required': 'Email is required',
-        'string.email': 'Invalid Email',
-    }),
-    password: Joi.string().required().messages({
-        'any.required': 'Password is required',
-    }),
-    roleInfo:Joi.array().items(Joi.object({role:Joi.string().required().valid(...Object.values(IRoles)),roleId:Joi.number().required()})), //roles
-    username: Joi.string().optional(),
+  firstName: Joi.string().required().messages({
+    "any.required": "Firstname is required",
+  }),
+  lastName: Joi.string().required().messages({
+    "any.required": "Lastname is required",
+  }),
+  email: Joi.string().email().required().messages({
+    "any.required": "Email is required",
+    "string.email": "Invalid Email",
+  }),
+  password: Joi.string().required().messages({
+    "any.required": "Password is required",
+  }),
+  roleInfo: Joi.array().items(
+    Joi.object({
+      role: Joi.string()
+        .required()
+        .valid(...Object.values(ICreateRoles)),
+      roleId: Joi.number().required(),
+    })
+  ), //roles
+  username: Joi.string().optional(),
+});
+
+export const keycloakUpdateUserSchema = Joi.object({
+  firstName: Joi.string().required().messages({
+    "any.required": "Firstname is required",
+  }),
+  lastName: Joi.string().required().messages({
+    "any.required": "Lastname is required",
+  }),
+  email: Joi.string().email().required().messages({
+    "any.required": "Email is required",
+    "string.email": "Invalid Email",
+  }),
+  roleInfo: Joi.array().items(
+    Joi.object({
+      role: Joi.string()
+        .required()
+        .valid(...Object.values(IRoles)),
+      roleId: Joi.number().required(),
+    })
+  ),
 });
 
 export const keycloakAssignClientRollToUserSchema = Joi.object({

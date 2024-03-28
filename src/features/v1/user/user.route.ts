@@ -21,6 +21,23 @@ const router = Router();
 // router.get('/evaluator', Rbac([IRoles.SUPER_ADMIN, IRoles.ADMIN]),  UserController.getEvaluator);
 
 
-router.get('/',UserController.getMultiUsers)
+
+/**
+ * @GET 
+ * @route /v1/users/
+ * @description Get All Users
+ */
+router.get("/", Rbac([IRoles.SUPER_ADMIN, IRoles.COE_HEAD]), UserController.getMultiUsers);
+
+
+/**
+ * @GET 
+ * @route /v1/users/user
+ * @description Get Single User by User Id passed in query params
+ */
+router.get("/user", Rbac([IRoles.SUPER_ADMIN, IRoles.COE_HEAD]), UserController.getSingleUser);
+
+
+
 
 export default router;
