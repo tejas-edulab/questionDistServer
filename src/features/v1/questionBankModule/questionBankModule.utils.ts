@@ -40,7 +40,9 @@ export default class QuestionBankModuleUtils {
     LEFT JOIN
         question_bank ON question_bank_module.id = question_bank.subjectModuleId
     WHERE
-        question_bank_module.userId = ${userId} AND question_bank_module.subjectId = ${subjectId};` ;
+        question_bank_module.userId = ${userId} AND question_bank_module.subjectId = ${subjectId}
+    GROUP BY 
+        question_bank_module.id, question_bank_module.subjectId, question_bank_module.name;` ;
         const data = await questionBankModuleRepository.query(query);
         return data?.length > 0 ? jsonParser(data) : [];
     }

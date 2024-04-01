@@ -21,7 +21,7 @@ router.post('/role', Rbac([IRoles.COE_HEAD, IRoles.SUPER_ADMIN]), KeycloakContro
      @description: Register User to the Keycloak
 */
 
-router.post("/register", Rbac([IRoles.SUPER_ADMIN, IRoles.COE_HEAD]), KeycloakController.registerUser);
+router.post("/register", Rbac([IRoles.SUPER_ADMIN, IRoles.COE_HEAD]), KeycloakController.registerUser, KeycloakController.assignClientRollToUser);
 
 /**
      @route: /keycloak/admin-login

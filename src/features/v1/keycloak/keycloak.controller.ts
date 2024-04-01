@@ -334,9 +334,8 @@ export default class KeycloakController {
 
       // Pass the email and role to the next middleware
       req.body = { email, roleInfo };
-      //   return next();
+        return next();
 
-      res.status(200).json({ status: true, data: { message: "User created" }, error: null });
     } catch (e) {
       console.log("Main Catch", e);
       // Pass any caught error to the next middleware
@@ -344,7 +343,101 @@ export default class KeycloakController {
     }
   };
 
+  static assignClientRollToUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // Validate the request body
+        await keycloakAssignClientRollToUserSchema.validateAsync(req.body);
 
+        // Deconstruct the body
+        const { roleInfo, email } = req.body;
+        console.log(req.body)
+        // Check if authorization header is present
+        if (req.headers.authorization === undefined) return next(ApiError.unAuthorized());
+
+        // Get the user data
+        const user = await UserRepository.findUserByEmail(email);
+        if (!user) return res.status(400).json({ status: 400, error: 'User Not Found' });
+
+        // This is keycloak userId needed while assigning role to keyclaok user
+        let userId: string;
+
+        // Check if userId exits for the role
+        if (user.userId === null) {
+            try {
+                // If userId is null get the userId from the keycloak
+                const keycloakUser = await KeycloakApi.fetchKeycloakUser(req.body.email, req.headers.authorization);
+
+                userId = keycloakUser.userId;
+
+                // And Also store the userId in our database
+                user.userId = userId;
+                await UserRepository
+                    .updateUser(user.email, user.firstName, user.lastName, userId);
+            } catch (e) {
+                logger.error(e);
+                return res.status(500).json({ status: 500, error: 'Error while assigning role. Assigned Default Role' });
+            }
+        } else {
+            userId = user.userId;
+        }
+
+        // Get the role data
+        const userRole = await UserRoleRepository.fetchRole(user.id)
+        console.log('role details:',userRole)
+
+        // const roleData = await RoleRepositories.fetchRoleByRoleName(role);
+        // if (!roleData) return res.status(400).json({ status: 400, error: 'Role Not Found' });
+        
+       const data = await Promise.all(userRole.map(async(value)=>{
+        const isRoleExist = await UserRoleRepository.fetchRoleByRoleName(value.role,value.userId);
+        if (!isRoleExist) return res.status(400).json({ status: 400, error: 'Role Not Found' });
+
+        if (value.rolesId === null) {
+          // Fetch the Role ID from the keycloak
+          try {
+              const keycloakRoles = await KeycloakApi.fetchKeycloakRole(req.headers.authorization);
+              const keycloakRoleData: IKeycloakRole[] = keycloakRoles
+                  .filter((currentRole: IKeycloakRole) => currentRole.name === value.role);
+                  value.rolesId = keycloakRoleData[0].id;
+              await RoleRepositories.updateRole(value.role);
+          } catch (e) {
+              logger.error(e);
+              return res.status(500).json({ status: 500, error: 'Error while assigning role. Assigned Default Role' });
+          }
+
+        }
+        return { id: value.rolesId, name: value.role }
+        }))
+       
+        /*
+          Preparing the axios data for calling the keycloak api
+        */
+   
+        // const data = [{ id: roleData.rolesId, name: roleData.role }];
+
+        /*
+          Update the new role for the user
+        */
+        // await UserRepository.updateRoleData(email, role);
+
+        try {
+            // Assign role in keycloak
+            await KeycloakApi.assignRole(data, userId, req.headers.authorization);
+        } catch (e) {
+            // Rollbacking to the default role
+            logger.error(e);
+            // await UserRepository.updateRoleData(email, user.role);
+            return res.status(500).json({ status: 500, error: 'Error while assigning role. Assigned Default Role' });
+        }
+
+        /*
+          Sending the response to the client.
+        */
+        return res.status(200).json({ status: 200, message: 'Done' });
+    } catch (e) {
+        return next(e);
+    }
+  };
 
   // static assignClientRollToUser = async (req: Request, res: Response, next: NextFunction) => {
   //   try {
