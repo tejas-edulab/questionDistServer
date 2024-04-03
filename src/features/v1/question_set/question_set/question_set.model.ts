@@ -20,6 +20,9 @@ export class QuestionSet {
     @Column()
     userId: number
 
+    @Column({ nullable: true })
+    uploadPdf: number
+
     @CreateDateColumn()
     createdAt: Date;
 

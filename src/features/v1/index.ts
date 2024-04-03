@@ -14,6 +14,7 @@ import subject from './subject/subject.route';
 import questionSet from './question_set/question_set/question_set.route';
 import paperSetter from './paperSetter/paper-setter.route';
 import questionBankModule from './questionBankModule/questionBankModule.route';
+import moderator from './moderator/moderator.route'
 
 const router = Router();
 dotenv.config();
@@ -76,6 +77,10 @@ const productionRoutes: IRoutes[] = [
     {
         path: '/paperSetter',
         route: paperSetter
+    },
+    {
+        path: '/moderator',
+        route: moderator
     },
     {
         path: '/questionBankModule',

@@ -41,7 +41,7 @@ export const AppDataSource = new DataSource({
     logging: false,
     entities: [User, Roles,
         Course, Subject, Semester,
-        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator, PaperSetter, QuestionSet, QuestionBankModule
+        UserRole, AssignSME, AssignPaperSetter, QuestionBank, AssignModerator, PaperSetter, QuestionSet, QuestionBankModule,Uploads
     ],
     migrationsTableName: "migration_table",
     migrations: [migrationLocation],

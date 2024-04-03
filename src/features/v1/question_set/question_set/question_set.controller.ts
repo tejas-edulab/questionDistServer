@@ -32,6 +32,10 @@ export default class QuestionSetController {
                     if (checkRole.some((obj: any) => obj.roleName === IRoles.SUPER_ADMIN || obj.roleName === IRoles.COE_HEAD)) {
                         const data = await QuestionSetUtils.getQuestionSet();
                         sendSuccessResponse(req, res, { data });
+                    } else if (checkRole.some((obj: any) => obj.roleName === IRoles.MODERATOR)) {
+
+                        const data = await QuestionSetUtils.getQuestionSetByExamAndSubjectId(Number(req.query.examId), Number(req.query.subjectId));
+                       return sendSuccessResponse(req, res, { data });
                     } else {
                         console.log("req.query", req.query.examId, req.query.subjectId);
 

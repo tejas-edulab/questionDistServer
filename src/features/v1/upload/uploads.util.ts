@@ -5,7 +5,7 @@ import { Uploads } from './uploads.model';
 const uploadsRepository = AppDataSource.getRepository(Uploads);
 
 export default class UploadsRepository {
-  static createUploads = async (data:object) => {
+  static createUploads = async (data:any) => {    
     const uploadedFile = await uploadsRepository.save(data);
     return uploadedFile;
   };
