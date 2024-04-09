@@ -11,6 +11,34 @@ export default class QuestionSetUtils {
         return await questionSetRepository.save(data);
     }
 
+    static async updateUploadedPdfId(uploadPdf: number, id: number) {
+        return await questionSetRepository.update({ id }, {
+            uploadPdf
+        });
+    }
+
+    static async getQuestionSetData(userId: number, subjectId: number, examId: number, questionSetId: number) {
+        const query = `SELECT
+        qs.questions AS questions,
+        qs.setName AS setName,
+        subject.subjectName AS subjectName
+    FROM
+        question_set AS qs
+        LEFT JOIN subject AS subject ON qs.subjectId = subject.id
+        LEFT JOIN exam AS exam ON exam.id = qs.examId 
+    WHERE
+        qs.userId = ${userId} 
+        AND qs.subjectId = ${subjectId} 
+        AND qs.examId = ${examId} 
+        AND qs.id = ${questionSetId}`
+
+        const data = await questionSetRepository.query(query);
+        if (data && data.length > 0) {
+            return jsonParser(data);
+        }
+        return []
+    }
+
     static async getQuestionSetByUserIdExamAndSubjectId(userId: number, examId: number, subjectId: number) {
         const query = `SELECT
         question_set.id,
@@ -20,7 +48,7 @@ export default class QuestionSetUtils {
         question_set.userId,
         question_set.createdAt,
         question_set.updatedAt,
-        subject.name AS subjectName,
+        subject.subjectName AS subjectName,
         exam.examCode,
         exam.examType,
         exam.month,
@@ -60,7 +88,7 @@ export default class QuestionSetUtils {
         question_set.uploadPdf,
         question_set.createdAt,
         question_set.updatedAt,
-        subject.name AS subjectName,
+        subject.subjectName AS subjectName,
         exam.examCode,
         exam.examType,
         exam.month,
@@ -99,7 +127,7 @@ export default class QuestionSetUtils {
         question_set.userId,
         question_set.createdAt,
         question_set.updatedAt,
-        subject.name AS subjectName,
+        subject.subjectName AS subjectName,
         exam.examCode,
         exam.examType,  
         exam.month,
@@ -130,7 +158,7 @@ export default class QuestionSetUtils {
         question_set.userId,
         question_set.createdAt,
         question_set.updatedAt,
-        subject.name AS subjectName,
+        subject.subjectName AS subjectName,
         exam.examCode,
         exam.examType,
         exam.month,

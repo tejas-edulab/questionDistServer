@@ -7,7 +7,9 @@ import ApiError from "../../../utils/api-error";
 export default class UserController {
   static async getMultiUsers(req: Request, res: Response, next: NextFunction) {
     try {
-      const users = await UserRepository.fetchMultiUser();
+      const role = req.query.role;
+      
+      const users = await UserRepository.fetchMultiUser(role as string);
       sendSuccessResponse(req, res, { users });
     } catch (err) {
       next(err);

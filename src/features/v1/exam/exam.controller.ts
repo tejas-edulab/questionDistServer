@@ -15,6 +15,15 @@ export default class ExamController {
         }
     }
 
+    public static async assignedExam(req: Request, res: Response, next: NextFunction) {
+        try {
+           const exams = await ExamRepository.fetchAssignedExam()
+           sendSuccessResponse(req, res, {exams})
+        } catch (error) {
+            next(error);
+        }
+    }
+
     public static async getSubject(req: Request, res: Response, next: NextFunction) {
         try {
             const {examId} = await examSchema.validateAsync(req.query)

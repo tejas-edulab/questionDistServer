@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../../data-source";
 import { jsonParser } from "../../../helpers/common.helpers";
 import { User } from "./user.model";
-import { IRoles, IfetchMultiUser } from "./user.types";
+import { IFetchMultiUser, IRoles } from "./user.types";
 
 const userRepostory = AppDataSource.getRepository(User);
 
@@ -117,7 +117,7 @@ export default class UserRepository {
     return userRepostory.find({ where: { role } });
   };
 
-  static fetchMultiUser = async () => {
+  static fetchMultiUser = async (role?:string) => {
     const query = `
     SELECT 
         u.id,
@@ -126,16 +126,17 @@ export default class UserRepository {
 		u.email,
 		u.username, 
         JSON_ARRAYAGG(
-           JSON_OBJECT('roleId', ur.roleId, 'roleName', ur.role)
+           JSON_OBJECT('roleId', ur.roleId, 'role', ur.role)
         ) AS rolesInfo
     FROM 
         user u 
     LEFT JOIN 
-        user_role ur ON ur.userid = u.id 
+        user_role ur ON ur.userid = u.id
+        ${role ? `WHERE ur.role = '${role}'`: ''} 
     GROUP BY 
     u.id;
-        `;
-    const data = (await userRepostory.query(query)) as IfetchMultiUser[];
+        `;  
+    const data = (await userRepostory.query(query)) as IFetchMultiUser[];
 
     const resData = data.map((item) => {
       item.rolesInfo = jsonParser(item.rolesInfo);

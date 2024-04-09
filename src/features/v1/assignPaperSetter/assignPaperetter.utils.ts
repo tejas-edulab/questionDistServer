@@ -44,7 +44,7 @@ export default class AssignPaperSetterUtils {
         return jsonParser(data);
     }
 
-    static async getAssignPaperSetterByUserIdAndExamId(userId: number, examId: number) {
+    static async getAssignPaperSetterByUserIdAndExamId(userId: number, examId: number) {        
         const query = `SELECT 
         user.id AS userId,
         user.firstname,
@@ -56,7 +56,7 @@ export default class AssignPaperSetterUtils {
         exam.year,
         course.name AS courseName,
         semester.semName,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_paper_setter.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_paper_setter.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_paper_setter
     LEFT JOIN
@@ -93,7 +93,7 @@ export default class AssignPaperSetterUtils {
         exam.year,
         course.name AS courseName,
         semester.semName,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_paper_setter.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_paper_setter.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_paper_setter
     LEFT JOIN

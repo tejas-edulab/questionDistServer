@@ -22,7 +22,7 @@ export default class AssignModeratorUtils {
         exam.year,
         course.name AS courseName,
         semester.semName,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_moderator.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_moderator.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_moderator
     LEFT JOIN
@@ -53,7 +53,7 @@ export default class AssignModeratorUtils {
         exam.year,
         course.name AS courseName,
         semester.semName,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_moderator.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_moderator.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_moderator
     LEFT JOIN
@@ -90,7 +90,7 @@ export default class AssignModeratorUtils {
         exam.year,
         course.name AS courseName,
         semester.semName,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_moderator.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignPaperSetterId', assign_moderator.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_moderator
     LEFT JOIN

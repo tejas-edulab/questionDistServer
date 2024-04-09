@@ -53,8 +53,8 @@ export default class PaperSetterUtils {
             exam.year,
             course.name AS courseName,
             semester.semName,
-            CONCAT('[', GROUP_CONCAT(JSON_OBJECT('paperSetterId', paper_setter.id, 'subjectId', subject.id, 'name', subject.name, 'oldSubjectCode', subject.oldSubjectCode,
-            'subjectCode', subject.subjectCode, 'credits', subject.credits, 'subjectType', subject.subjectType
+            CONCAT('[', GROUP_CONCAT(JSON_OBJECT('paperSetterId', paper_setter.id, 'subjectId', subject.id, 'subjectName', subject.subjectName,
+            'subjectCode', subject.subjectCode, 'credits', subject.credits
             )), ']') AS subjects
         FROM
         assign_paper_setter as paper_setter

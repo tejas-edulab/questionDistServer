@@ -20,7 +20,7 @@ export default class AssignMeUtils {
         user.id AS userId,
         user.firstname,
         user.lastname,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignSmeId', assign_sme.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignSmeId', assign_sme.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_sme
     LEFT JOIN
@@ -39,7 +39,7 @@ export default class AssignMeUtils {
         user.id AS userId,
         user.firstname,
         user.lastname,
-        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignSmeId', assign_sme.id, 'subjectId', subject.id, 'subjectName', subject.name)), ']') AS subjects
+        CONCAT('[', GROUP_CONCAT(JSON_OBJECT('assignSmeId', assign_sme.id, 'subjectId', subject.id, 'subjectName', subject.subjectName)), ']') AS subjects
     FROM
         assign_sme
     LEFT JOIN

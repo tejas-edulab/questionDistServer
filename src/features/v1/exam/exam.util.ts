@@ -41,4 +41,29 @@ export default class ExamRepository {
         LEFT JOIN semester s ON s.id = e.semesterId;`
         return examRepository.query(query)
     }
+
+    static fetchAssignedExam() {
+        const query = `SELECT DISTINCT
+                e.*,
+                CONCAT(
+                    e.examType,
+                    ' ',
+                    e.MONTH,
+                    ' ',
+                    e.YEAR,
+                    ' ',
+                    c.name,
+                    ' ',
+                    s.semName 
+                ) AS examName 
+            FROM
+                exam AS e
+                LEFT JOIN course AS c ON c.id = e.courseId
+                LEFT JOIN semester AS s ON s.id = e.semesterId
+                LEFT JOIN assign_paper_setter AS sps ON sps.examId = e.id
+            WHERE
+                sps.examId IS NOT NULL;`
+        
+        return examRepository.query(query)
+    }
 }

@@ -30,6 +30,15 @@ export class QuestionBank {
     type: string
 
     @Column()
+    unit: string
+
+    @Column()
+    co: string
+
+    @Column()
+    plo: string
+
+    @Column()
     userId: number
 
     @Column({ nullable: true, default: null })

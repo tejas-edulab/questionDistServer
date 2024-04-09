@@ -28,13 +28,13 @@ export interface IKeycloakRole {
     containerId: string
 }
 
-export interface IfetchMultiUser {
+export interface IFetchMultiUser {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   username: string;
-  roleInfo: {
+  rolesInfo: {
     roleId: number;
     role: string;
   }[];

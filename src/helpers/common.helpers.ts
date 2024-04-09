@@ -62,14 +62,31 @@ export async function extractZip(zipFilePath: string, destinationFolder: string)
 }
 
 
+// export function getImageLocation(destination: string, filename: string): string {
+//   let folderLocation = destination.split('\\');
+//   console.log('folderLocation',folderLocation);
+  
+//   const uploadsIndex = folderLocation.indexOf('uploads');
+//   console.log('uploadsIndex',uploadsIndex);
+  
+//   if (uploadsIndex !== -1) {
+//     folderLocation = folderLocation.slice(uploadsIndex + 1);
+//     console.log('folderLocation',folderLocation);
+    
+//   }
+//   // If 'uploads' is not found, return the original array
+
+
+//   return path.join(process.cwd(), 'uploads',...folderLocation ,filename);
+// }
+
 export function getImageLocation(destination: string, filename: string): string {
-  let folderLocation = destination.split('\\');
+  const isWindows = process.platform === 'win32';
+  let folderLocation =isWindows?  destination.split('\\') :destination.split('/');
   const uploadsIndex = folderLocation.indexOf('uploads');
   if (uploadsIndex !== -1) {
     folderLocation = folderLocation.slice(uploadsIndex + 1);
   }
   // If 'uploads' is not found, return the original array
-
-
   return path.join(process.cwd(), 'uploads',...folderLocation ,filename);
 }

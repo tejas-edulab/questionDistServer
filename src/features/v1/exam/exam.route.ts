@@ -12,6 +12,13 @@ router.get('/', ExamController.getExam);
 
 /**
  * @GET
+ * @route /v1/exam/assignedExam
+ * @description get assigned Exam
+ */
+router.get('/assignedExam', ExamController.assignedExam);
+
+/**
+ * @GET
  * @route /v1/exam
  * @description get subjects
  */

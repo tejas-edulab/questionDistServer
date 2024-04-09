@@ -5,7 +5,7 @@ import Rbac from '../../../../middlewares/rbac';
 
 const router = Router();
 
-router.post('/', Rbac([IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.SUPER_ADMIN]), QuestionSetController.createQuestionSet);
+router.post('/', Rbac([IRoles.PAPER_SETTER, IRoles.MODERATOR, IRoles.COE_HEAD, IRoles.SUPER_ADMIN]), QuestionSetController.createQuestionSet,QuestionSetController.generateQuestionSetPdf);
 
 router.get('/', Rbac([IRoles.SUPER_ADMIN, IRoles.MODERATOR, IRoles.PAPER_SETTER, IRoles.COE_HEAD]), QuestionSetController.getQuestionSet);
 

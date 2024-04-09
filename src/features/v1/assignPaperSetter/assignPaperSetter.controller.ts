@@ -5,7 +5,6 @@ export default class AssignPaperSetterController {
 
     static async createAssignPaperSetter(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log("req.body", req.body);
 
             const subjects = req.body.subjectIds;
 
@@ -21,8 +20,7 @@ export default class AssignPaperSetterController {
                     const examId = req.body.examId;
                     const newData = { userId, subjectId, examId };
                     return await AssignPaperSetterUtils.saveAssignPaperSetter(newData);
-                });
-
+                });                
                 await Promise.all(promises);
 
                 // If all saves are successful, send a success response

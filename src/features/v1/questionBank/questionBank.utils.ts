@@ -16,12 +16,9 @@ export default class QuestionBankUtils {
         const query = `
         SELECT 
         assign_sme.subjectId,
-        subject.name,
-        subject.oldSubjectCode,
-        subject.subjectCode,
+        subject.subjectName,
+        subject.subjectCode as subjectCode,
         subject.credits,
-        subject.subjectType,
-        subject.subjectTypeStatus,
         COALESCE(
             (
                 SELECT JSON_ARRAYAGG(
@@ -35,7 +32,7 @@ export default class QuestionBankUtils {
                         'topic', question_bank.topic,
                         'type', question_bank.type,
                         'userId', question_bank.userId,
-                        'subjectName', subject.name
+                        'subjectName', subject.subjectName
                     )
                 )
                 FROM question_bank
@@ -70,8 +67,11 @@ export default class QuestionBankUtils {
         question_bank.subject,
         question_bank.topic,
         question_bank.type,
+        question_bank.unit,
+        question_bank.co,
+        question_bank.plo,
         question_bank.userId,
-        subject.name AS subjectName,
+        subject.subjectName AS subjectName,
         question_bank.questionLevel
     FROM
         question_bank
@@ -100,12 +100,10 @@ export default class QuestionBankUtils {
     static async getAllQuestionBank() {
         const query = `SELECT
         subject.id AS subjectId,
-        subject.name AS name,
-        subject.oldSubjectCode,
-        subject.subjectCode,
+        subject.subjectName AS name,
+        subject.subjectCode as subjectCode,
         subject.credits,
-        subject.subjectType,
-        subject.subjectTypeStatus,
+        
         COALESCE(
             (
                 SELECT JSON_ARRAYAGG(
@@ -119,7 +117,7 @@ export default class QuestionBankUtils {
                         'topic', qb.topic,
                         'type', qb.type,
                         'userId', qb.userId,
-                        'subjectName', subject.name
+                        'subjectName', subject.subjectName
                     )
                 )
                 FROM question_bank AS qb
@@ -152,7 +150,7 @@ export default class QuestionBankUtils {
         question_bank.topic,
         question_bank.type,
         question_bank.userId,
-        subject.name AS subjectName,
+        subject.subjectName AS subjectName,
         question_bank.questionLevel
     FROM
         question_bank

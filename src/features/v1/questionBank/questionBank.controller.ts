@@ -10,7 +10,7 @@ import UserRoleRepository from "../userRole/user-role.utils";
 export default class QuestionBankController {
 
     static async createQuestionBank(req: Request, res: Response, next: NextFunction) {
-        try {
+        try {            
             const userId = req.user.id
             const newData = req.body.map((value) => ({ ...value, userId, modifiedBy: userId }))
             const result = await QuestionBankUtils.saveQuestionBank(newData)
